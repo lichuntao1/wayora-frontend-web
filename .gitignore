@@ -1,0 +1,93 @@
+# === OS & 编辑器 ===
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+*.code-workspace
+
+# === 依赖产物 ===
+node_modules/
+# ⚠️ 锁文件请提交：package-lock.json / yarn.lock / pnpm-lock.yaml
+
+# === 构建输出 ===
+dist/
+build/
+out/
+.storybook-out/
+storybook-static/
+
+# === 常见框架产物 ===
+# Next.js
+.next/
+.vercel/
+# Nuxt
+.nuxt/
+# SvelteKit
+.svelte-kit/
+# Astro
+.astro/
+# Parcel
+.parcel-cache/
+# Expo / React Native Web(如有)
+.expo/
+
+# === 工具缓存 ===
+.cache/
+.tmp/
+temp/
+tmp/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+.turbo/
+vite.config.ts.timestamp-*
+.vite/
+# webpack 的缓存一般在 node_modules/.cache 已被忽略
+
+# === 测试 / 覆盖率 ===
+coverage/
+.nyc_output/
+# Cypress
+cypress/videos/
+cypress/screenshots/
+# Playwright
+playwright-report/
+test-results/
+# Vitest/Jest 临时
+.vitest/
+
+# === 日志 ===
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# === 环境变量 ===
+.env
+.env.*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+# 保留示例文件
+!.env.example
+
+# === 包管理器（按需选择） ===
+# Yarn Berry（不使用 Zero-Installs 时忽略缓存；使用 Zero-Installs 请删除下一行）
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# pnpm store（通常在全局目录，无需忽略；若有自定义到项目内可打开）
+# .pnpm-store/
+
+# === 其它可能的静态托管/部署产物（按需） ===
+.vercel/
+.netlify/
+firebase-debug.log
