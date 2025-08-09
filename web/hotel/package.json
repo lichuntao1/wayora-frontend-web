@@ -1,5 +1,5 @@
 {
-  "name": "@wayora-webapp/ui",
+  "name": "@wayora-webapp/hotel",
   "version": "1.0.0",
   "main": "index.js",
   "keywords": [],
@@ -27,7 +27,12 @@
     "clsx": "^2",
     "tailwind-merge": "^2",
     "tailwindcss-animate": "^1",
-    "lucide-react": "^0.441"
+    "lucide-react": "^0.441",
+
+    "@wayora-webapp/core": "workspace:*",
+    "@wayora-webapp/hooks": "workspace:*",
+    "@wayora-webapp/shared": "workspace:*",
+    "@wayora-webapp/ui": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5",

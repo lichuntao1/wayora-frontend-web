@@ -2,12 +2,41 @@
   "name": "wayora-webapp",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
+  "packageManager": "pnpm@10.14.0",
+  "engines": {
+    "node": ">=18.18"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bootstrap": "pnpm install",
+    "dev": "pnpm -r --parallel --filter ./web/* run dev",
+    "dev:plan": "pnpm --filter ./web/plan run dev",
+    "dev:hotel": "pnpm --filter ./web/hotel run dev",
+    "build": "pnpm -r --filter ./web/* run build",
+    "typecheck": "pnpm -r --filter ./web/* run typecheck",
+    "upgrade": "pnpm up -r --latest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "pnpm": {
+    "overrides": {
+      "react": "^18",
+      "react-dom": "^18",
+      "react-router-dom": "^6",
+      "axios": "^1",
+      "zustand": "^4",
+      "react-hook-form": "^7"
+    },
+    "ignoredBuiltDependencies": [
+      "core-js-pure"
+    ]
+  },
+  "browserslist": [
+    "defaults",
+    "not ie 11",
+    "maintained node versions"
+  ],
   "description": ""
-
 }
