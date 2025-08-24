@@ -21,24 +21,33 @@ module.exports = {
   module: {
     rules: [
       { test: /\.[tj]sx?$/, exclude: /node_modules/, use: 'babel-loader' },
-      { test: /\.css$/, use: ['style-loader', 'css-loader'] }
+      { test: /\.css$/, use: ['style-loader', 'css-loader','postcss-loader'] }
     ]
   },
-  resolve: { extensions: ['.ts', '.tsx', '.js'] },
+  resolve: { extensions: ['.ts', '.tsx', '.js'],
+             alias: { "@": require("path").resolve(__dirname, "src")  }
+           },
   plugins: [
     new ModuleFederationPlugin({
       name: 'hotel',                       // 远程容器的全局名：window.ui
       filename: 'remoteEntry.js',       // 远程清单文件
       exposes: {
+        './Css': './src/hotel-styles.ts',
         './Button': './src/components/Button',  // 导出一个组件
         './ThemeProvider': './src/theme/ThemeProvider'
       },
       remotes: {
+        // 建议把版本放在路径里，便于缓存与灰度 如tokens所示
+        tokens: 'tokens@https://cdn.example.com/tokens/v1/remoteEntry.js',
         ui: 'ui@http://localhost:40001/remoteEntry.js',       // 远程 UI 库 
       },
       shared: {
         react: { singleton: true, requiredVersion: deps.react },
-        'react-dom': { singleton: true, requiredVersion: deps['react-dom'] }
+        'react-dom': { singleton: true, requiredVersion: deps['react-dom'] },
+        'clsx': { singleton: true },
+        'tailwind-merge': { singleton: true },
+        // 视实际组件使用情况共享 radix 包
+        '@radix-ui/react-slot': { singleton: true, requiredVersion: deps['@radix-ui/react-slot'] }
       }
     }),
     new HtmlWebpackPlugin({ template: './demo/index.html', title: 'ui remote' })

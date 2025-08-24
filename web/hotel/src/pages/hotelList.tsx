@@ -1,6 +1,6 @@
 import React from "react";
 
-const hotelList = function hotelList():JSX.Element{
+const HotelList = function HotelList(){
 
     return(
         <div>
@@ -10,4 +10,4 @@ const hotelList = function hotelList():JSX.Element{
     );
 }
 
-export {hotelList};
+export {HotelList};

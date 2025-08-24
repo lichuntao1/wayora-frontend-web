@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom" ;
-import { hotelList } from "../pages/hotelList";
+import { HotelList } from "../pages/HotelList";
 
 const routes=[
   {
     path: "/hotellist",
-    Component: hotelList,
+    Component: HotelList,
     /* children: [
       { path: "new", Component: NewPost },
       { path: ":slug", Component: BlogPost },

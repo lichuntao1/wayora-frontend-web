@@ -1,0 +1,52 @@
+/* packages/ui/src/globals.css
+ * 目标：
+ * - 作为 Module Federation 远程的全局样式（只负责本远程）
+ * - Tailwind v4：仅引入 theme / utilities
+ * - 用 prefix(ui) 隔离类名，避免污染宿主
+ * - 不引入 preflight.css（防止 reset 冲突）
+ */
+
+@layer theme, components, utilities;
+
+/* 1) 主题层（不含 reset），加前缀隔离 */
+@import "tailwindcss/theme.css" layer(theme) prefix(ui);
+
+/* 2) （可选）动画/插件 */
+@import "tw-animate-css";
+
+/* 3) （可选）本地预览兜底 token。
+   如果宿主已通过“tokens 远程 / design-tokens.css”注入变量，删除这段即可。 
+:root {
+  --background: #ffffff;
+  --foreground: #111827;
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --radius: 0.5rem;
+}
+:root[data-theme="dark"] {
+  --background: #0b0b0b;
+  --foreground: #e5e7eb;
+  --primary: #6366f1;
+  --primary-foreground: #0b0b0b;
+}
+*/
+
+/* 4) 你的远程容器基础色（避免改动全局 html/body） */
+.ui-surface { background: var(--background); color: var(--foreground); }
+
+/* 5) 工具类（同样必须 prefix） */
+@import "tailwindcss/utilities.css" layer(utilities) prefix(ui);
+
+/* 6) 组件层（示例，按需保留） */
+@layer components {
+  .ui-btn {
+    @apply ui-inline-flex ui-items-center ui-justify-center ui-gap-2
+           ui-rounded-[var(--radius)]
+           ui-bg-[var(--primary)] ui-text-[var(--primary-foreground)]
+           ui-px-4 ui-py-2 ui-text-sm ui-font-medium ui-transition
+           ui-outline-none ui-ring-0;
+  }
+  .ui-btn:hover   { @apply ui-opacity-90; }
+  .ui-btn:active  { @apply ui-scale-[.98]; }
+  .ui-btn:disabled{ @apply ui-opacity-50 ui-cursor-not-allowed; }
+}

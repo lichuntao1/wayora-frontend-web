@@ -1,0 +1,47 @@
+/* design-tokens.css */
+@layer theme; /* 建议把 token 放到 theme layer，便于顺序管理 */
+
+/* 基础主题（默认 light） */
+:root {
+  /* 色彩（OKLCH / HSL 都可，下面只是例子） */
+  --color-bg: oklch(1 0 0);              /* 背景 */
+  --color-fg: oklch(0.15 0 0);            /* 前景文字 */
+  --color-primary: oklch(0.68 0.19 262);  /* 主色 */
+  --color-primary-foreground: oklch(0.98 0.02 262);
+
+  /* 语义 / 中性色 */
+  --color-muted: oklch(0.95 0 0);
+  --color-border: oklch(0.85 0 0);
+
+  /* 尺寸与圆角 */
+  --radius: 0.5rem;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-4: 1rem;
+
+  /* 字体 */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* 暗色主题（按需） */
+:root[data-theme="dark"] {
+  --color-bg: oklch(0.18 0 0);
+  --color-fg: oklch(0.98 0 0);
+  --color-muted: oklch(0.28 0 0);
+  --color-border: oklch(0.35 0 0);
+  --color-primary: oklch(0.75 0.18 262);
+  --color-primary-foreground: oklch(0.15 0.03 262);
+}
+
+/* 与 shadcn/ui v4 的变量约定（如果你用 shadcn，映射一层更省事） */
+:root {
+  --background: var(--color-bg);
+  --foreground: var(--color-fg);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-foreground);
+  --muted: var(--color-muted);
+  --border: var(--color-border);
+}
+
+/* 可选：提供主题类，宿主或远程都能挂在根节点切换主题 */
+.theme-dark { @apply [data-theme="dark"]; } /* 仅示意，如果需要也可直接切换 data-attr */

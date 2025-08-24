@@ -1,0 +1,21 @@
+/* packages/web/hotel/src/globals.css */
+@layer theme, components, utilities;
+
+/* 只引入 theme/utilities，并给 Tailwind 输出加 "hotel-" 前缀做隔离 */
+@import "tailwindcss/theme.css" layer(theme) prefix(hotel);
+
+/* （可选）本地兜底变量；如果宿主已引 tokens，可删除 */
+:root {
+  --background: #fff;
+  --foreground: #111827;
+  --brand: #0ea5e9;
+  --radius: 0.5rem;
+}
+
+@import "tailwindcss/utilities.css" layer(utilities) prefix(hotel);
+
+/* 组件层（示例） */
+@layer components {
+  .hotel-card { @apply hotel-rounded-[var(--radius)] hotel-bg-white hotel-shadow; }
+  .hotel-btn  { @apply hotel-bg-[var(--brand)] hotel-text-white hotel-px-4 hotel-py-2 hotel-rounded; }
+}
