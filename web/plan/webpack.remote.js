@@ -6,10 +6,12 @@ const deps = require('./package.json').dependencies;
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: './src/index.tsx',             // 可用 demo 启动预览；纯库可换成 './src/index.tsx'
+  entry: './src/main.tsx',
+  target: "web",             // 可用 demo 启动预览；纯库可换成 './src/index.tsx'
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: 'auto',
+    publicPath: "/",
+    chunkFormat: "array-push" ,
     clean: true
   },
   devServer: {
@@ -20,26 +22,43 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.[tj]sx?$/, exclude: /node_modules/, use: 'babel-loader' },
+      {test: /\.[jt]sx?$/,
+        include: path.resolve(__dirname, 'src'),
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            presets: [
+              ['@babel/preset-env', { bugfixes: true, modules: false }],
+              ['@babel/preset-react', { runtime: 'automatic', development: process.env.NODE_ENV !== 'production' }],
+              '@babel/preset-typescript'
+            ],
+            plugins: [
+              ['@babel/plugin-transform-runtime', { corejs: false, helpers: true, regenerator: true }]
+            ]
+          }
+        }
+      },
       { test: /\.css$/, use: ['style-loader', 'css-loader','postcss-loader']}
     ]
   },
-  resolve: { extensions: ['.ts', '.tsx', '.js'],
-             alias: { "@": require("path").resolve(__dirname, "src")  } 
+  resolve: { extensions: ['.ts', '.tsx', '.js','.jsx','.json'],
+             alias: { "@": path.resolve(__dirname, "src") } 
             },
   plugins: [
     new ModuleFederationPlugin({
       name: 'plan',                       // 远程容器的全局名：window.ui
       filename: 'remoteEntry.js',       // 远程清单文件
       exposes: {
-        './Css': './src/plan-styles.ts',
-        './Button': './src/components/Button',  // 导出一个组件
-        './ThemeProvider': './src/theme/ThemeProvider'
+        //'./Css': './src/plan-styles.ts',
+        //'./Button': './src/components/Button',  // 导出一个组件
+        //'./ThemeProvider': './src/theme/ThemeProvider'
       },
       remotes: {
         // 建议把版本放在路径里，便于缓存与灰度 如tokens所示
-        tokens: 'tokens@https://cdn.example.com/tokens/v1/remoteEntry.js',
-        ui: 'ui@http://localhost:40001/remoteEntry.js',       // 远程 UI 库 
+        //tokens: 'tokens@https://cdn.example.com/tokens/v1/remoteEntry.js',
+        //ui: 'ui@http://localhost:40001/remoteEntry.js',       // 远程 UI 库 
       },
       shared: {
         react: { singleton: true, requiredVersion: deps.react },
@@ -50,7 +69,7 @@ module.exports = {
         '@radix-ui/react-slot': { singleton: true, requiredVersion: deps['@radix-ui/react-slot'] }
       }
     }),
-    new HtmlWebpackPlugin({ template: './demo/index.html', title: 'ui remote' })
+    new HtmlWebpackPlugin({ template: 'src/index.html', title: 'plan',inject: 'body' })
   ],
   devtool: 'source-map'
 };
