@@ -12,8 +12,6 @@ import "./globals.css";
 function App(){ 
     
     
-    
-    
     return <div>
                  <Calendar/>
                  <TestUi/>
